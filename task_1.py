@@ -4,8 +4,6 @@
 # Train a lightweight image classification model (e.g., recognizing recyclable items).
 # Convert the model to TensorFlow Lite and test it on a sample dataset.
 
-!pip install -q tensorflow
-
 import tensorflow as tf
 import numpy as np
 import matplotlib.pyplot as plt
@@ -111,4 +109,35 @@ for i in range(sample_size):
 
 tflite_accuracy = correct_predictions / sample_size
 print(f"Accuracy of the TFLite model on sample data: {tflite_accuracy:.4f}")
+
+# 4. Additional analysis and visualization
+print(f"\nModel Summary:")
+print(f"- Original model accuracy: {accuracy:.4f}")
+print(f"- TFLite model accuracy: {tflite_accuracy:.4f}")
+print(f"- Model file size: {os.path.getsize(tflite_model_path)} bytes")
+
+# Plot training history
+plt.figure(figsize=(12, 4))
+
+plt.subplot(1, 2, 1)
+plt.plot(history.history['accuracy'], label='Training Accuracy')
+plt.plot(history.history['val_accuracy'], label='Validation Accuracy')
+plt.title('Model Accuracy')
+plt.xlabel('Epoch')
+plt.ylabel('Accuracy')
+plt.legend()
+
+plt.subplot(1, 2, 2)
+plt.plot(history.history['loss'], label='Training Loss')
+plt.plot(history.history['val_loss'], label='Validation Loss')
+plt.title('Model Loss')
+plt.xlabel('Epoch')
+plt.ylabel('Loss')
+plt.legend()
+
+plt.tight_layout()
+plt.savefig('training_history.png')
+plt.show()
+
+print("\nTraining history plot saved as 'training_history.png'")
 
